@@ -1,0 +1,120 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar at the bottom of your screen
+    "height": 27, // Waybar height
+	"margin": 15,
+    // "width": 1366, // Waybar width
+    // Choose the order of the modules	
+    "modules-left": ["clock", "custom/weather", "custom/spotify", "tray", "custom/update"],
+    "modules-center": ["hyprland/workspaces", "tray", "hyprland/language"],
+    "modules-right": ["backlight", "pulseaudio", "cpu", "memory", "network", "bluetooth", "battery", "custom/power"],
+	"hyprland/workspaces": {
+		"disable-scroll": true,
+		"format": "{name} {icon}",
+		"format-icons": {	
+			"active": "",
+			"default": ""	
+		},
+		"persistent-workspaces": {
+			"*": 5
+		}
+	},
+	"custom/update": {
+		"tooltip": true,
+		"interval": 60,
+		"exec": "$HOME/.config/waybar/scripts/pac_update.sh"
+	},
+	"backlight": {
+		"device": "intel_backlight",
+		"format": "{percent}% {icon}",
+		"format-icons": [" ", "󰖨 "]
+	},
+    "tray": {
+        "icon-size": 24,
+        "spacing": 20
+    },
+    "clock": {
+        "format": "{:%Y-%m-%d  %H:%M}"
+    },
+    "cpu": {
+        "format": "{usage}% "
+    },
+    "memory": {
+        "format": "{}% 󰕲"
+    },
+    "battery": {
+        "bat": "BAT1",
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": [" ", " ", " ", " ", " "]
+    },
+    "network": {
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr}  ",
+        "format-disconnected": "Disconnected  "
+    },
+	"bluetooth": {
+		"format": " {status}",
+		"format-disabled": "", // an empty format will hide the module
+		"format-connected": " {num_connections} connected",
+		"tooltip-format": "{controller_alias}\t{controller_address}",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+	},
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": " ",
+            "handsfree": " ",
+            "headset": " ",
+            "phone": " ",
+            "portable": " ",
+            "car": " ",
+            "default": [" ", " "]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/spotify": {
+        "format": "󰓃 {}",
+        "max-length": 40,
+        //"interval": 30,
+        "exec": "/home/pablo/.config/waybar/scripts/mediaplayer.sh", 
+        "exec-if": "pgrep spotify"
+    },
+	"custom/weather": {
+		"format": "{}",
+        "tooltip": true,
+        "interval": 180,
+        "exec": "python $HOME/.config/waybar/scripts/weather.py",
+		"on-click": "python $HOME/.config/waybar/scripts/weather.py",
+        "return-type": "json"	
+	},
+	"image#weather": {
+		"exec": "$HOME/.config/waybar/scripts/image_weather.sh",
+		"size": 24,
+		"interval": 180
+	},
+	"hyprland/language": {
+		"format": "{}",
+		"format-it": "Italian",
+		"format-us": "US"
+	},
+	"custom/power": {
+		"format": " ",
+		"on-click" : "wlogout"
+	},
+	"custom/apps": {
+		"format": "App Launcher",
+		"on-click" : "rofi -show drun"
+	}
+}
